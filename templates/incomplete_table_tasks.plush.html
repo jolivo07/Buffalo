@@ -1,0 +1,74 @@
+<%= partial("header.html") %>
+    <div class="container-fluid mb-5">
+        <div class="row d-flex align-items-center">
+            <div class="col-2 d-flex justify-content-start ps-5 ">
+                <div>
+                    <div>
+                        <%= form({action: tableIncompletePath(), method: "GET"}) { %>
+
+                            <div class="input-group">
+                                <%= f.InputTag({name:"search_name" , class: "form-control rounded", placeholder: "Search Name"}) %>
+                        
+                              </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 ">
+                <%= form({action: tableIncompletePath(), method: "GET"}) { %>
+                <div class="d-flex">
+                     <%= f.InputTag({name:"search_date" , class: "form-control rounded", type:"date"}) %>
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="col-2 text-end ">
+                <a href="/new-task" class="btn bg-blue-ligth fs-4 py-3 me-5 px-5 text-white"> 
+                        Add Task
+                </a>
+            </div>
+
+           
+    </div>
+</div>
+    <div id="table-task-incomplete" class="container-fluid px-5">
+        <table class="table bg-white shadow">
+            <thead class="bg-blue-dark text-white">
+                <tr>
+                    <th class="text-center" scope="col">Status</th>
+                    <th class="text-center" scope="col">Task</th>
+                    <th class="text-center" scope="col">Created At</th>
+                    <th class="text-center" scope="col">Finished At</th>
+                    <th class="text-center" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-tbody-incomplete">
+                <%= for (task) in tasks { %>
+                    <tr id="task-not-incpmlete">
+                        <td class="text-center">
+                            <%= linkTo( checkPath({ task_id: task.ID }), {class: "fa-regular fa-circle-check text-dark fs-5 text-decoration-none" }) %>
+                        </td>
+
+                        <td class="text-center">
+                            <%= linkTo(tableIncompletePath({task_id: task.ID}), {class: "text-decoration-none text-dark "}) { %>
+                                <%= task.Name_task %>
+                            <% } %>
+                        </td>
+
+                        <td class="text-center">
+                            <%=  task.CreatedAt.Day()t%> <%=  task.CreatedAt.Month()t%> <%=  task.CreatedAt.Year()t%> 
+                        </td>
+                        <td class="text-center">--</td>
+                        <td class="text-center">
+                            <%= linkTo( editPath({ task_id: task.ID }), {class: "fa-regular fa-pen-to-square text-warning fs-5 text-decoration-none" }) %>
+                                <%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none" , "data-confirm" : "Are you sure?" }) %>
+                        </td>
+                    </tr>
+
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <%= partial("info.html") %>

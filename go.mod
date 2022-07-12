@@ -10,8 +10,12 @@ require (
 	github.com/gobuffalo/mw-forcessl v0.0.0-20220514125302-be60179938a4
 	github.com/gobuffalo/mw-i18n/v2 v2.0.1
 	github.com/gobuffalo/mw-paramlogger v1.0.0
+	github.com/gobuffalo/nulls v0.4.1
 	github.com/gobuffalo/pop/v6 v6.0.4
 	github.com/gobuffalo/suite/v4 v4.0.2
+	github.com/gobuffalo/validate/v3 v3.3.1
+	github.com/gobuffalo/x v0.0.0-20190224155809-6bb134105960
+	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/markbates/grift v1.5.0
 	github.com/unrolled/secure v1.10.0
 )
@@ -19,6 +23,7 @@ require (
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
+	github.com/alessio/shellescape v1.4.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
@@ -35,11 +40,8 @@ require (
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
 	github.com/gobuffalo/meta v0.3.1 // indirect
-	github.com/gobuffalo/nulls v0.4.1 // indirect
 	github.com/gobuffalo/plush/v4 v4.1.11 // indirect
 	github.com/gobuffalo/tags/v3 v3.1.2 // indirect
-	github.com/gobuffalo/validate/v3 v3.3.1 // indirect
-	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
@@ -65,7 +67,7 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.16 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.18 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/monoculum/formam v3.5.5+incompatible // indirect
 	github.com/nicksnyder/go-i18n v1.10.1 // indirect
@@ -79,13 +81,15 @@ require (
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.7.1 // indirect
+	github.com/stretchr/testify v1.7.5 // indirect
+	github.com/tawesoft/golib/v2 v2.0.5 // indirect
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871 // indirect
-	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d // indirect
+	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
+	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -1,0 +1,33 @@
+
+<%= if (taskInfo) { %>
+    <div id="footer" class="bg-white fixed-bottom">
+    <div class="container-fluid p-5">
+        <div class="row">
+            <div id="footer-task-name" class="col-6 fs-2 text-blue-dark"><%= taskInfo.Name_task %></div>
+            <div id="footer-task-date" class="col-6 text-end text-secondary fs-5">  <%= finish_at %></div>
+        </div>
+    </div>
+    <div class="container-fluid p-5 pt-0">
+        <div class="row">
+            <div id="footer-task-description" class="col-12 fs-5"><%= taskInfo.Description %></div>
+        </div>
+    </div>
+</div>
+
+  
+    <% } else { %>
+
+
+             <div id="footer-preview" class="bg-white fixed-bottom">
+        <div class="container-fluid p-5 pt-0">
+            <div class="row p-5">
+                <div class="col-12 text-secondary fs-5 p-5 text text-center">
+                    Select a Task to preview it
+                </div>
+            </div>
+        </div>
+    </div
+
+
+     
+        <% } %>

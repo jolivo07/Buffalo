@@ -57,17 +57,29 @@ func App() *buffalo.App {
 		app.Use(csrf.New)
 
 		// Wraps each request in a transaction.
-		//   c.Value("tx").(*pop.Connection)
+		//  c.Value("tx").(*pop.Connection)
 		// Remove to disable this.
 		app.Use(popmw.Transaction(models.DB))
 		// Setup and use translations:
 		app.Use(translations())
 
-		app.GET("/", HomeHandler)
+		app.GET("/", Home)
+		app.GET("/table-incomplete", ShowTableIncomplete)
+		app.GET("/table-complete", ShowTableComplete)
+		app.GET("/edit", ShowEditTask)
+		app.GET("/new-task", ShowNewTask)
+		app.POST("/new-task/send", SendNewTask)
+		app.PUT("/edit-send", Update)
+		app.GET("/delete", Delete)
+		app.GET("/check", Check)
+		app.GET("/uncheck", UnCheck)
+
+
+
+
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}
-
 	return app
 }
 

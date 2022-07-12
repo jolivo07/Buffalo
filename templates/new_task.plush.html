@@ -1,0 +1,30 @@
+<%= partial("header.html") %>
+<%= form({action:"/new-task/send" , method: "POST" }) { %>
+    <div id="form-new-tasks" class="container bg-white shadow p-4 ">
+        <div class="row">
+            <div class="col-12 fs-2 fw-bolder mb-5">New Task</div>
+            <div class="col-12 mb-5">
+                <label for="exampleFormControlInput1" class="form-label">Title Task</label>
+                <%= f.InputTag({name:"name_task",type: "text", class: "form-control" }) %>
+            </div>
+            <div class="col-12 mb-5">
+                <label class="form-label">Description</label>
+                <%= f.TextArea({name: "description",type: "text", class: "resize", rows: 10}) %>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end">
+               <a href="/table-incomplete">
+                <button id="btn-cancel-new-task" type="button" class="btn bg-light fs-4">
+                    Cancel
+                </button>
+               </a>
+                
+
+                <button id="btn-create-tasks" type="submit" class="btn bg-blue-ligth fs-4 mx-5 text-white px-4">
+                    Create Task
+                </button>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
