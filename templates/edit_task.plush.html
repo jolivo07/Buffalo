@@ -1,13 +1,13 @@
 
 
 <%= partial("header.html") %>
-<%= form({id:"edit", action:editSendPath({task_id: tasks.ID}) , method: "PUT" }) { %>
-<div id="form-edit-tasks" class="container bg-white shadow p-4 ">
+<%= form({id:"edit", action:editSendPath({task_id: task.ID}) , method: "PUT" }) { %>
+<div id="form-edit-task" class="container bg-white shadow p-4 ">
     <div class="row">
         <div class="col-12 fs-2 fw-bolder mb-5">Edit Task</div>
         <div class="col-12 mb-5">
             <label for="exampleFormControlInput1" class="form-label">Title Task</label>
-            <%= f.InputTag({name:"name",type: "text", class: "form-control" , value:tasks.Name}) %>
+            <%= f.InputTag({name:"name",type: "text", class: "form-control" , value:task.Name}) %>
             <%= if (error) { %>
                 <div class="text-center p-1">
                    <%= error %>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-12 mb-5">
             <label class="form-label">Description</label>
-            <%= f.TextArea({name: "description",type: "text", class: "resize", rows: 10, value:tasks.Description}) %>
+            <%= f.TextArea({name: "description",type: "text", class: "resize", rows: 10, value:task.Description}) %>
         </div>
 
         <div class="col-12 d-flex justify-content-end">

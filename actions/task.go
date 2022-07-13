@@ -196,7 +196,7 @@ func ShowEdit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	c.Set("tasks", tasks)
+	c.Set("task", tasks)
 
 	return c.Render(http.StatusOK, r.HTML("edit_task.plush.html"))
 }
