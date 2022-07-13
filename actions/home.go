@@ -1,281 +1,308 @@
 package actions
 
-import (
-	"errors"
-	"fmt"
-	"time"
+// import (
+// 	"errors"
+// 	"fmt"
+// 	"time"
 
-	"net/http"
+// 	"net/http"
 
-	"to_do_app/models"
+// 	"to_do_app/models"
 
-	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/nulls"
+// 	"github.com/gobuffalo/buffalo"
+// 	"github.com/gobuffalo/nulls"
 
+// 	"github.com/gobuffalo/pop/v6"
+// )
 
-	"github.com/gobuffalo/pop/v6"
-)
+// func ShowNewTask(c buffalo.Context) error {
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
+// 	tasks := []models.Task{}
 
+// 	q := tx.Where("finished_at is null")
+// 	count, err := q.Count(tasks)
+// 	if err != nil {
+// 		return err
 
-func Home(c buffalo.Context) error {
-	return c.Render(http.StatusOK, r.HTML("home/index.plush.html"))
-}
-func ShowNewTask(c buffalo.Context) error {
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
-	countIncomplete := []models.Tasks{}
+// 	}
 
-	qi := tx.Where("finish_at is null")
-	if err := qi.All(&countIncomplete); err != nil {
-		return err
-	}
+// 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
 
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", len(countIncomplete))
+// 	c.Set("count", countInfoIncomplete)
+// 	return c.Render(http.StatusOK, r.HTML("new_task.plush.html"))
+// }
 
-	c.Set("count", countInfoIncomplete)
-	return c.Render(http.StatusOK, r.HTML("new_task.plush.html"))
-}
+// func ShowTableIncomplete(c buffalo.Context) error {
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
 
-func ShowTableIncomplete(c buffalo.Context) error {
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	tasks := []models.Task{}
+// 	search := &models.Search{}
 
-	tasks := []models.Tasks{}
-	search := &models.Search{}
+// 	if err := c.Bind(search); err != nil {
+// 		return err
+// 	}
 
-	if err := c.Bind(search); err != nil {
-		return err
-	}
-	
+// 	q := tx.Where("finished_at IS null")
 
+// 	if search.Name != "" {
+// 		q.Where("name like  '%" + search.Name + "%'")
 
-	if search.NameSearch != "" {
-		if err := tx.Where("finish_at IS null AND name_task like  '%" + search.NameSearch + "%'").All(&tasks); err != nil {
-		return err
-		}
-	} else if search.DateSearch != "" {
-		if err := tx.Where("finish_at IS null AND extract(day from created_at)= EXTRACT(day FROM TIMESTAMP '"+search.DateSearch+"')").All(&tasks); err != nil {
-			return err
-		}
-		
-	} else {if err := tx.Where("finish_at IS null").All(&tasks); err != nil {
-		return err
-	  }
-	}
+// 	} else if !search.Date.IsZero() {
 
+// 		q.Where("created_at::date = ?::date", search.Date)
 
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", len(tasks))
+// 	}
 
-	c.Set("count", countInfoIncomplete)
-	c.Set("underlineIncomplete", tasks)
-	c.Set("tasks", tasks)
+// 	if err := q.All(&tasks); err != nil {
+// 		return err
+// 	}
 
-	for _, v := range tasks {
+// 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", len(tasks))
 
-		if v.ID.String() == c.Param("task_id") {
+// 	c.Set("count", countInfoIncomplete)
+// 	c.Set("underlineIncomplete", tasks)
+// 	c.Set("tasks", tasks)
 
-			c.Set("taskInfo", v)
-			c.Set("finish_at", "this task is not completed")
+// 	for _, v := range tasks {
 
-		}
+// 		if v.ID.String() == c.Param("task_id") {
 
-	}
+// 			c.Set("taskInfo", v)
+// 			c.Set("finishedAt", "this task is not completed")
 
-	return c.Render(http.StatusOK, r.HTML("incomplete_table_tasks.plush.html"))
-}
+// 		}
 
-func ShowTableComplete(c buffalo.Context) error {
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	}
 
-	tasks := []models.Tasks{}
-	search := &models.Search{}
+// 	return c.Render(http.StatusOK, r.HTML("incomplete_table_tasks.plush.html"))
+// }
 
-	if err := c.Bind(search); err != nil {
-		return err
-	}
+// func ShowTableComplete(c buffalo.Context) error {
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
 
+// 	tasks := []models.Task{}
+// 	search := &models.Search{}
 
-	if search.NameSearch != "" {
+// 	if err := c.Bind(search); err != nil {
+// 		return err
+// 	}
 
-		if err := tx.Where("finish_at IS not null AND name_task like  '%" + search.NameSearch + "%'").All(&tasks); err != nil {
-		return err
-		}
+// 	q := tx.Where("finished_at IS not null")
 
-	} else if search.DateSearch != "" {
-		if err := tx.Where("finish_at IS not null AND extract(day from created_at) = EXTRACT(day FROM TIMESTAMP '"+search.DateSearch+"')").All(&tasks); err != nil {
-			return err
-		}
-	} else {
-		if err := tx.Where("finish_at IS not null").All(&tasks); err != nil {
-		return err
-	  }
-	}
+// 	if search.Name != "" {
 
-	countInfoComplete := fmt.Sprintf("%v Complete Tasks", len(tasks))
+// 		q.Where("name like  '%" + search.Name + "%'")
 
-	c.Set("count", countInfoComplete)
-	c.Set("underline", tasks)
-	c.Set("tasks", tasks)
+// 	} else if !search.Date.IsZero() {
 
-	for _, v := range tasks {
+// 		q.Where("created_at::date = ?::date", search.Date)
 
-		if v.ID.String() == c.Param("task_id") {
+// 	}
+// 	if err := q.All(&tasks); err != nil {
+// 		return err
+// 	}
 
-			c.Set("taskInfo", v)
-			c.Set("finish_at", v.Finish_at)
+// 	countInfoComplete := fmt.Sprintf("%v Complete Tasks", len(tasks))
 
-		}
+// 	c.Set("count", countInfoComplete)
+// 	c.Set("underline", tasks)
+// 	c.Set("tasks", tasks)
 
-	}
+// 	for _, v := range tasks {
 
-	return c.Render(http.StatusOK, r.HTML("complete_table_tasks.plush.html"))
-}
+// 		if v.ID.String() == c.Param("task_id") {
 
-func SendNewTask(c buffalo.Context) error {
+// 			c.Set("taskInfo", v)
+// 			c.Set("finishedAt", v.FinishedAt)
 
+// 		}
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	}
 
-	u := models.Tasks{}
-	if err := c.Bind(&u); err != nil {
-		return err
-	}
+// 	return c.Render(http.StatusOK, r.HTML("complete_table_tasks.plush.html"))
+// }
 
-	if  u.Name_task ==""{
-		c.Flash().Add("danger", "Alert enter task name!")
-	}else {
-		err := tx.Create(&u)
-		if err != nil {
-			return err
-		}
+// func SendNewTask(c buffalo.Context) error {
 
-	}
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
 
-	return c.Redirect(302, "/table-incomplete")
-}
+// 	task := models.Task{}
+// 	if err := c.Bind(&task); err != nil {
+// 		return err
+// 	}
 
-func Delete(c buffalo.Context) error {
+// 	q := tx.Where("finished_at is null")
+// 	count, err := q.Count(task)
+// 	if err != nil {
+// 		return err
 
-	tasks := &models.Tasks{}
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	}
 
-	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
 
-	if err := tx.Destroy(tasks); err != nil {
-		return err
-	}
+// 	c.Set("count", countInfoIncomplete)
 
-	return c.Redirect(302, "/table-incomplete")
-}
-func ShowEditTask(c buffalo.Context) error {
+// 	verrs, err := tx.ValidateAndCreate(&task)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	if verrs.HasAny() {
+// 		c.Set("error", verrs.Get("name"))
+// 		return c.Render(422, r.HTML("new_task.plush.html"))
+// 	}
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	return c.Redirect(302, "/table-incomplete")
+// }
 
-	tasks := &models.Tasks{}
-	countIncomplete := []models.Tasks{}
+// func Delete(c buffalo.Context) error {
 
-	qi := tx.Where("finish_at is null")
-	if err := qi.All(&countIncomplete); err != nil {
-		return err
-	}
+// 	tasks := &models.Task{}
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
 
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", len(countIncomplete))
+// 	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
+// 		return c.Error(http.StatusNotFound, err)
+// 	}
 
-	c.Set("count", countInfoIncomplete)
+// 	if err := tx.Destroy(tasks); err != nil {
+// 		return err
+// 	}
 
-	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	return c.Redirect(302, "/table-incomplete")
+// }
+// func ShowEditTask(c buffalo.Context) error {
 
-	c.Set("tasks", tasks)
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
+// 	tasks := &models.Task{}
 
-	return c.Render(http.StatusOK, r.HTML("edit_task.plush.html"))
-}
+// 	q := tx.Where("finished_at is null")
+// 	count, err := q.Count(tasks)
+// 	if err != nil {
+// 		return err
 
-func Update(c buffalo.Context) error {
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction found")
-	}
+// 	}
 
-	tasks := &models.Tasks{}
-	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
 
-	if err := c.Bind(tasks); err != nil {
-		return err
-	}
+// 	c.Set("count", countInfoIncomplete)
 
-	if tasks.Name_task =="" {
-		c.Flash().Add("danger", "Alert enter task name!")
-	}else{
-		if err := tx.Update(tasks); err != nil {
-			return c.Error(http.StatusNotFound, err)
-		}
-	}
+// 	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
+// 		return c.Error(http.StatusNotFound, err)
+// 	}
 
-	
+// 	c.Set("tasks", tasks)
 
-	return c.Redirect(302, "/table-incomplete")
-}
+// 	return c.Render(http.StatusOK, r.HTML("edit_task.plush.html"))
+// }
 
-func Check(c buffalo.Context) error {
+// func Update(c buffalo.Context) error {
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction found")
+// 	}
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction")
-	}
+// 	tasks := models.Task{}
+// 	if err := tx.Find(&tasks, c.Param("task_id")); err != nil {
+// 		return c.Error(http.StatusNotFound, err)
+// 	}
 
-	task := &models.Tasks{}
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	if err := c.Bind(&tasks); err != nil {
+// 		return err
+// 	}
+// 	q := tx.Where("finished_at is null")
+// 	count, err := q.Count(tasks)
+// 	if err != nil {
+// 		return err
 
-	task.Finish_at = nulls.NewTime(time.Now())
+// 	}
 
-	if err := tx.Update(task); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
 
-	return c.Redirect(302, "/table-incomplete")
-}
+// 	c.Set("count", countInfoIncomplete)
+// 	c.Set("tasks", &tasks)
+// 	verrs, err := tx.ValidateAndUpdate(&tasks)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	if verrs.HasAny() {
+// 		c.Set("error", verrs.Get("name"))
+// 		return c.Render(422, r.HTML("edit_task.plush.html"))
+// 	}
 
-func UnCheck(c buffalo.Context) error {
+// 	// if tasks.Name_task == "" {
+// 	// 	c.Flash().Add("danger", "Alert enter task name!")
+// 	// } else {
+// 	// 	if err := tx.Update(tasks); err != nil {
+// 	// 		return c.Error(http.StatusNotFound, err)
+// 	// 	}
+// 	// }
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return errors.New("no transaction")
-	}
+// 	return c.Redirect(302, "/table-incomplete")
+// }
 
-	task := &models.Tasks{}
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// func Check(c buffalo.Context) error {
 
-	task.Finish_at = nulls.Time{}
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction")
+// 	}
 
-	if err := tx.Update(task); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
+// 	task := &models.Task{}
+// 	if err := tx.Find(task, c.Param("task_id")); err != nil {
+// 		return c.Error(http.StatusNotFound, err)
+// 	}
 
-	return c.Redirect(302, "/table-incomplete")
-}
+// 	if !task.FinishedAt.Valid {
+// 		task.FinishedAt = nulls.NewTime(time.Now())
+// 		if err := tx.Update(task); err != nil {
+// 			return c.Error(http.StatusNotFound, err)
+// 		}
+// 		return c.Redirect(302, "/table-incomplete")
+// 	}
+
+// 	c.Flash().Add("danger text-center", "This task is already complete!")
+// 	return c.Redirect(302, "/table-incomplete")
+// }
+
+// func UnCheck(c buffalo.Context) error {
+
+// 	tx, ok := c.Value("tx").(*pop.Connection)
+// 	if !ok {
+// 		return errors.New("no transaction")
+// 	}
+
+// 	task := &models.Task{}
+
+// 	if err := tx.Find(task, c.Param("task_id")); err != nil {
+// 		return c.Error(http.StatusNotFound, err)
+// 	}
+
+// 	if task.FinishedAt.Valid {
+// 		task.FinishedAt = nulls.Time{}
+
+// 		if err := tx.Update(task); err != nil {
+// 			return c.Error(http.StatusNotFound, err)
+// 		}
+// 		return c.Redirect(302, "/table-incomplete")
+// 	}
+
+// 	c.Flash().Add("danger", "This task is already incomplete!")
+// 	return c.Redirect(302, "/table-incomplete")
+// }

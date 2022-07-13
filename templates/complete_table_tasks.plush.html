@@ -8,7 +8,7 @@
                     <%= form({action: tableCompletePath(), method: "GET"}) { %>
 
                         <div class="input-group">
-                            <%= f.InputTag({name:"search_name" , class: "form-control rounded", placeholder: "Search Name"}) %>
+                            <%= f.InputTag({name:"name" , class: "form-control rounded", placeholder: "Search Name"}) %>
                     
                           </div>
                     <% } %>
@@ -18,8 +18,8 @@
         <div class="col-8 ">
             <%= form({action: tableCompletePath(), method: "GET"}) { %>
             <div class="d-flex">
-                 <%= f.InputTag({name:"search_date" , class: "form-control rounded", type:"date"}) %>
-                 <button type="submit" class="btn btn-primary">Submit</button>
+                 <%= f.InputTag({name:"date" , class: "form-control rounded", type:"date"}) %>
+                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <% } %>
         </div>
@@ -53,11 +53,11 @@
                 <td class="text-center"> <%= linkTo( uncheckPath ({ task_id: task.ID }), {class: "fa-regular fa-circle-xmark fs-5 text-dark text-decoration-none" }) %></td>
                 <td class="text-center">
                     <%= linkTo(tableCompletePath({task_id: task.ID}), {class: "text-decoration-none text-dark"}) { %>
-                        <%= task.Name_task %>
+                        <%= task.Name %>
                         <% } %>
                 </td>
                 <td class="text-center"><%= task.CreatedAt.Day() %> <%=  task.CreatedAt.Month() %> <%=  task.CreatedAt.Year() %> </td>
-                <td class="text-center"><%= task.Finish_at.Format(Format(tsdfsdfsdf) %> </td>
+                <td class="text-center"><%= task.FinishedAt.Time.Day() %> <%= task.FinishedAt.Time.Month() %> <%= task.FinishedAt.Time.Year() %></td>
                 <td class="text-center"><%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none", "data-confirm": "Are you sure?"}) %>
                 </td>
                 

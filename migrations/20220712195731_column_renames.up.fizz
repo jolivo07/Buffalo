@@ -1,0 +1,6 @@
+<%
+rename_column("tasks", "name_task", "name")
+rename_column("tasks", "finis_at", "finished_at")
+rename_column("tasks", "create_at", "created_at")
+rename_column("tasks", "update_at", "updated_at")
+%>

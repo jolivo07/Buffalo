@@ -14,7 +14,6 @@ require (
 	github.com/gobuffalo/pop/v6 v6.0.4
 	github.com/gobuffalo/suite/v4 v4.0.2
 	github.com/gobuffalo/validate/v3 v3.3.1
-	github.com/gobuffalo/x v0.0.0-20190224155809-6bb134105960
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/markbates/grift v1.5.0
 	github.com/unrolled/secure v1.10.0
@@ -23,7 +22,6 @@ require (
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
-	github.com/alessio/shellescape v1.4.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
@@ -82,9 +80,7 @@ require (
 	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.5 // indirect
-	github.com/tawesoft/golib/v2 v2.0.5 // indirect
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871 // indirect
-	golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d // indirect
 	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
