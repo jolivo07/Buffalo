@@ -152,7 +152,7 @@ func Create(c buffalo.Context) error {
 		return c.Render(422, r.HTML("new_task.plush.html"))
 	}
 
-	return c.Redirect(302, "/table-incomplete")
+	return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 }
 
 func Delete(c buffalo.Context) error {
@@ -246,7 +246,7 @@ func Update(c buffalo.Context) error {
 	// 	}
 	// }
 
-	return c.Redirect(302, "/table-incomplete")
+	return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 }
 
 func Check(c buffalo.Context) error {
@@ -267,11 +267,11 @@ func Check(c buffalo.Context) error {
 		if err := tx.Update(tasks); err != nil {
 			return c.Error(http.StatusNotFound, err)
 		}
-		return c.Redirect(302, "/table-incomplete")
+		return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 	}
 
 	c.Flash().Add("danger text-center", "This task is already complete!")
-	return c.Redirect(302, "/table-incomplete")
+	return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 }
 
 func UnCheck(c buffalo.Context) error {
@@ -295,9 +295,9 @@ func UnCheck(c buffalo.Context) error {
 		if err := tx.Update(tasks); err != nil {
 			return c.Error(http.StatusNotFound, err)
 		}
-		return c.Redirect(302, "/table-incomplete")
+		return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 	}
 
 	c.Flash().Add("danger", "This task is already incomplete!")
-	return c.Redirect(302, "/table-incomplete")
+	return c.Redirect(http.StatusSeeOther, "/table-incomplete")
 }
