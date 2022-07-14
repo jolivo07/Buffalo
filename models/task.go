@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gobuffalo/validate/v3"
@@ -41,4 +42,20 @@ func (t *Task) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 // This method is not required and may be deleted.
 func (t *Task) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
+}
+
+type Tasks []Task
+
+func (t Tasks) InfoTask(id uuid.UUID) Task{
+
+	for _, v := range t {
+		if v.ID == id {
+			
+			return v
+		}
+		
+	}
+
+		
+ return Task{}
 }
