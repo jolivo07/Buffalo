@@ -60,12 +60,12 @@ func ShowTableIncomplete(c buffalo.Context) error {
 
 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", len(tasks))
 	taskInfo := tasks.InfoTask(uuid.FromStringOrNil(c.Param("task_id")))
-		
+
 	c.Set("taskInfo", taskInfo)
 	c.Set("count", countInfoIncomplete)
 	c.Set("underlineIncomplete", tasks)
 	c.Set("tasks", tasks)
-	
+
 	return c.Render(http.StatusOK, r.HTML("incomplete_table_tasks.plush.html"))
 }
 
@@ -98,13 +98,12 @@ func ShowTableComplete(c buffalo.Context) error {
 	}
 
 	countInfoComplete := fmt.Sprintf("%v Complete Tasks", len(tasks))
-	taskInfo := tasks.InfoTask(uuid.FromStringOrNil(c.Param("task_id")))	
-	
+	taskInfo := tasks.InfoTask(uuid.FromStringOrNil(c.Param("task_id")))
+
 	c.Set("taskInfo", taskInfo)
 	c.Set("count", countInfoComplete)
 	c.Set("underline", tasks)
 	c.Set("tasks", tasks)
-	
 
 	return c.Render(http.StatusOK, r.HTML("complete_table_tasks.plush.html"))
 }
@@ -212,6 +211,7 @@ func Update(c buffalo.Context) error {
 		return err
 
 	}
+
 
 	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
 

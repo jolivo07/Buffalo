@@ -63,6 +63,8 @@ func App() *buffalo.App {
 		// Setup and use translations:
 		app.Use(translations())
 
+		app.GET("/", Index)
+		app.GET("/users", ShowUsers)
 		app.GET("/table-incomplete", ShowTableIncomplete)
 		app.GET("/table-complete", ShowTableComplete)
 		app.GET("/edit", ShowEdit)
