@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 	"to_do_app/models"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop/v6"
@@ -13,20 +14,12 @@ import (
 )
 
 func ShowNewTask(c buffalo.Context) error {
-	tasks := []models.Task{}
+	tasks := models.Tasks{}
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return errors.New("no transaction found")
 	}
-	q := tx.Where("finished_at is null")
-	count, err := q.Count(tasks)
-	if err != nil {
-		return err
-	}
-
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
-
-	c.Set("count", countInfoIncomplete)
+	c.Set("count", tasks.Count(tx))
 
 	return c.Render(http.StatusOK, r.HTML("new_task.plush.html"))
 }
@@ -63,8 +56,7 @@ func ShowTableIncomplete(c buffalo.Context) error {
 
 	c.Set("taskInfo", taskInfo)
 	c.Set("count", countInfoIncomplete)
-	c.Set("underlineIncomplete", tasks)
-	c.Set("tasks", tasks)
+	c.Set("tasksIncomplete", tasks)
 
 	return c.Render(http.StatusOK, r.HTML("incomplete_table_tasks.plush.html"))
 }
@@ -97,13 +89,12 @@ func ShowTableComplete(c buffalo.Context) error {
 		return err
 	}
 
-	countInfoComplete := fmt.Sprintf("%v Complete Tasks", len(tasks))
+	countTask := fmt.Sprintf("%v Complete Tasks", len(tasks))
 	taskInfo := tasks.InfoTask(uuid.FromStringOrNil(c.Param("task_id")))
 
 	c.Set("taskInfo", taskInfo)
-	c.Set("count", countInfoComplete)
-	c.Set("underline", tasks)
-	c.Set("tasks", tasks)
+	c.Set("count", countTask)
+	c.Set("tasksComplete", tasks)
 
 	return c.Render(http.StatusOK, r.HTML("complete_table_tasks.plush.html"))
 }
@@ -116,20 +107,12 @@ func Create(c buffalo.Context) error {
 	}
 
 	task := models.Task{}
+	tasks := models.Tasks{}
 	if err := c.Bind(&task); err != nil {
 		return err
 	}
 
-	q := tx.Where("finished_at is null")
-	count, err := q.Count(task)
-	if err != nil {
-		return err
-
-	}
-
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
-
-	c.Set("count", countInfoIncomplete)
+	c.Set("count", tasks.Count(tx))
 
 	verrs, err := tx.ValidateAndCreate(&task)
 	if err != nil {
@@ -163,60 +146,45 @@ func Delete(c buffalo.Context) error {
 }
 func ShowEdit(c buffalo.Context) error {
 
-	tasks := &models.Task{}
-
+	task := &models.Task{}
+	tasks := models.Tasks{}
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return errors.New("no transaction found")
 	}
 
-	q := tx.Where("finished_at is null")
-	count, err := q.Count(tasks)
-	if err != nil {
-		return err
-	}
+	c.Set("count", tasks.Count(tx))
 
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
-
-	c.Set("count", countInfoIncomplete)
-
-	if err := tx.Find(tasks, c.Param("task_id")); err != nil {
+	if err := tx.Find(task, c.Param("task_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	c.Set("task", tasks)
+	c.Set("task", task)
 
 	return c.Render(http.StatusOK, r.HTML("edit_task.plush.html"))
 }
 
 func Update(c buffalo.Context) error {
 
-	tasks := models.Task{}
+	task := models.Task{}
+	tasks := models.Tasks{}
 
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return errors.New("no transaction found")
 	}
 
-	if err := tx.Find(&tasks, c.Param("task_id")); err != nil {
+	if err := tx.Find(&task, c.Param("task_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	if err := c.Bind(&tasks); err != nil {
+	if err := c.Bind(&task); err != nil {
 		return err
 	}
-	q := tx.Where("finished_at is null")
-	count, err := q.Count(tasks)
-	if err != nil {
-		return err
+	
 
-	}
-
-
-	countInfoIncomplete := fmt.Sprintf("%v Incomplete Tasks", count)
-
-	c.Set("count", countInfoIncomplete)
-	verrs, err := tx.ValidateAndUpdate(&tasks)
+	c.Set("count", tasks.Count(tx))
+	verrs, err := tx.ValidateAndUpdate(&task)
 	if err != nil {
 		return err
 	}

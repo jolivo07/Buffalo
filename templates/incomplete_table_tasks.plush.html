@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody id="table-tbody-incomplete">
-                <%= for (task) in tasks { %>
+                <%= for (task) in tasksIncomplete { %>
                     <tr id="task-not-incpmlete">
                         <td class="text-center">
                             <%= linkTo( checkPath({ task_id: task.ID }), {class: "fa-regular fa-circle-check text-dark fs-5 text-decoration-none" }) %>

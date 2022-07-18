@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gobuffalo/nulls"
@@ -56,4 +57,17 @@ func (t Tasks) InfoTask(id uuid.UUID) Task {
 	}
 
 	return Task{}
+}
+
+func (t Tasks) Count(tx *pop.Connection) (countInfoIncomplete string) {
+
+	q := tx.Where("finished_at is null")
+	count, err := q.Count(t)
+	if err != nil {
+		return
+	}
+
+	countInfoIncomplete = fmt.Sprintf("%v Incomplete Tasks", count)
+
+	return countInfoIncomplete
 }
