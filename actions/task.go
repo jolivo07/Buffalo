@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 	"to_do_app/models"
-
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop/v6"
@@ -48,7 +47,8 @@ func ShowTableIncomplete(c buffalo.Context) error {
 	q := tx.Where("finished_at IS null")
 
 	if search.Name != "" {
-		q.Where("name like  '%" + search.Name + "%'")
+		s := fmt.Sprintf("%%%v%%", search.Name)
+		q.Where("name like  ? ", s)
 
 	} else if !search.Date.IsZero() {
 		q.Where("created_at::date = ?::date", search.Date)
@@ -85,8 +85,8 @@ func ShowTableComplete(c buffalo.Context) error {
 	q := tx.Where("finished_at IS not null")
 
 	if search.Name != "" {
-
-		q.Where("name like  '%" + search.Name + "%'")
+		s := fmt.Sprintf("%%%v%%", search.Name)
+		q.Where("name like  ?", s)
 
 	} else if !search.Date.IsZero() {
 

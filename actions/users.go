@@ -18,24 +18,22 @@ func ShowUsers(c buffalo.Context) error {
 	}
 	users := []models.Users{}
 	ages := models.SliceUsers{}
-	searchs := &models.Users{}
 	if err := tx.Select(" avg(date_part('year',age(birthdate))) ").All(&ages); err != nil {
 		return err
 	}
 
-	if err := c.Bind(searchs); err != nil {
-		return err
-	}
 
-	s := fmt.Sprintf(`%%%v%%`, searchs.InformationPerson)
-
+	p := c.Param("infomation_person")
+	s := fmt.Sprintf(`%%%v%%`, p)
 	
-	q := tx.Where("first_name like ? OR last_name like ? OR email like ? ", s, s, s)
-	if err := q.Select(" * , date_part('year',age(birthdate)) as edad").All(&users); err != nil {
+	q := tx.Select(" * , date_part('year',age(birthdate)) as age")
+	if c.Param("infomation_person") != "" {
+		q.Where("first_name like ? OR last_name like ? OR email like ? ", s, s, s)
+	}
+	if err := q.All(&users); err != nil{
 		return err
 	}
 
-	fmt.Println(searchs.InformationPerson)
 
 	c.Set("avg", ages.AvgAge(ages))
 	c.Set("count", len(users))
