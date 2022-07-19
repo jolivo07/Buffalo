@@ -44,6 +44,11 @@
                 </tr>
             </thead>
             <tbody id="table-tbody-incomplete">
+                <%= if (len(tasksIncomplete)==0) { %>
+                    <tr>
+                        <td class="text-center" colspan = "5">Task not found</td>
+                    </tr>
+                <% } %>
                 <%= for (task) in tasksIncomplete { %>
                     <tr id="task-not-incpmlete">
                         <td class="text-center">

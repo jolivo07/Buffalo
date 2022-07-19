@@ -36,7 +36,6 @@ func ShowUsers(c buffalo.Context) error {
 
 
 	c.Set("avg", ages.AvgAge(ages))
-	c.Set("count", len(users))
 	c.Set("users", users)
 
 	return c.Render(http.StatusOK, r.HTML("users.plush.html"))
