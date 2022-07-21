@@ -63,7 +63,7 @@
                 </td>
                 <td class="text-center"><%= task.CreatedAt.Format("02 January 2006") %>  </td>
                 <td class="text-center"><%= task.FinishedAt.Time.Format("02 January 2006") %></td>
-                <td class="text-center"><%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none", "data-confirm": "Are you sure?"}) %>
+                <td class="text-center"><%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none", data-confirm:"Are you sure you want to proceed ?"}) %>
                 </td>
                 
                  
