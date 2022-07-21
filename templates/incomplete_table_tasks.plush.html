@@ -67,7 +67,7 @@
                         <td class="text-center">--</td>
                         <td class="text-center">
                             <%= linkTo( editPath({ task_id: task.ID }), {class: "fa-regular fa-pen-to-square text-warning fs-5 text-decoration-none" }) %>
-                            <%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none"}) %>
+                            <%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none ", data-confirm:"Are you sure you want to proceed ?"}) %>
                         </td>
                     </tr>
 
