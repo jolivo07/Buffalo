@@ -1,0 +1,68 @@
+<header>
+    <div class="bg-blue-ligth d-flex py-5 justify-content-between shadow p-3 mb-4">
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <div class="to-do px-5 text-white fw-bolder display-5  border-3 border-end border-white">
+                    <a class="text-decoration-none text-white" href="/"> ToDo List</a>
+
+                </div>
+                <div class="task-incomplate-nav ps-4 d-flex align-items-center text-white">
+                    <div class="fs-4 pe-5 " id="cont-task-incomplete">
+                     <%= len(users) %> users  
+                    </div>
+                    <div class="fs-3 px-4">
+                        average age of users: <span class="text-decoration-underline"><%= avg.Avg %></span>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+  </div>
+  </header>
+  <%= form({action: usersPath(), method: "GET"}) { %>
+
+    <div class="input-group p-5">
+        <%= f.InputTag({name:"infomation_person" , class: "form-control rounded", placeholder: "Search"}) %>
+
+      </div>
+<% } %>
+
+  <div id="table-task-incomplete" class="container-fluid px-5">
+    <table class="table bg-white shadow">
+        <thead class="bg-blue-dark text-white">
+            <tr>
+                <th class="text-center" scope="col">First Name</th>
+                <th class="text-center" scope="col">Last Name</th>
+                <th class="text-center" scope="col">Birthdate</th>
+                <th class="text-center" scope="col">Age</th>
+                <th class="text-center" scope="col">DNI</th>
+                <th class="text-center" scope="col">Phone Number</th>
+                <th class="text-center" scope="col">Email</th>
+                <th class="text-center" scope="col">Job Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= if (len(users)==0) { %>
+               <tr>
+                <td class="text-center" colspan = "8">User not found</td>
+               </tr>
+            <% } %>
+
+            <%= for (user) in users { %>
+                <tr>
+                    <td class="text-center"><%= user.FirstName %></td>
+                    <td class="text-center"><%= user.LastName %></td>
+                    <td class="text-center"><%= user.Birthdate.Format("01/02/2006")%></td>
+                    <td class="text-center"><%= user.Age %></td>
+                    <td class="text-center"><%= user.DNI %></td>
+                    <td class="text-center"><%= user.PhoneNumber %></td>
+                    <td class="text-center"><%= user.Email %></td>
+                    <td class="text-center"><%= user.JobTitle %></td>
+                </tr>
+             <% } %>
+        </tbody>
+    </table>
+</div>

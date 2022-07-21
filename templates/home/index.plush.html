@@ -1,45 +1,32 @@
-<div class="container bg-body p-5  ">
-  <div class="row ">
-      <div class="col-12">
-
-        
-        <%= form({action:"/form" , method: "POST"}) { %>
-          <div class="row">
-          
-              <label  class="form-label">Name Task</label>
-              <%= f.InputTag({name:"name_task",type: "text", class: "form-control" }) %>
-            </div>
-            <div class="col-md-12 my-3">
-              <label  class="form-label">description</label>
-              <%= f.InputTag({name:"description",type: "text", class: "form-control" }) %>
-            </div>
-            <div class="col-md-12 ">
-              <label  class="form-label">create at</label>
-              <%= f.InputTag({name:"create_at",type: "text", class: "form-control" }) %>
-            </div>
+<header>
+  <div class="bg-blue-ligth d-flex py-5 justify-content-between shadow p-3 mb-4">
+   <div class="container-fluid">
+      <div class="row">
+          <div class="col-6 d-flex">
+              <div class="to-do px-5 text-white fw-bolder display-5 ">
+                  ToDo List
+              </div>
+              
           </div>
-        </div>
-          <button type="submit" class="btn btn-primary my-4">Send</button>
-        <% } %>
+          <div class="col-6 d-flex justify-content-end align-items-center">
+              <div>
 
-      <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">agg</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
+                  
+                      <%= linkTo(usersPath(), {class: "px-5 me-4 text-decoration-none text-white fs-1"}) { %>
+                      USERS
+                      <% } %>
 
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-           
-          </tbody>
-        </table>
+
+                      <%= linkTo(tableIncompletePath(), {class: "px-5 me-4  text-decoration-none text-white fs-1"}) { %>
+                          TASKS
+                          <% } %>
+
+
+              </div>
+             
+          </div>
+      </div>
   </div>
 </div>
+</header>

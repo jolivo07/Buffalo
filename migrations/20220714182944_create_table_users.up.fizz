@@ -1,0 +1,10 @@
+create_table("users") {
+  t.Column("id", "uuid", {primary: true})
+  t.Column("first_name", "string", {})
+  t.Column("last_name", "string", {})
+  t.Column("dni", "string", {})
+  t.Column("phone_number", "integer", {"default": 0})
+  t.Column("email", "string", {})
+  t.Column("job_title", "string", {})
+  t.Column("birthdate", "timestamp", {"null": true})
+}

@@ -1,7 +1,8 @@
 package models
 
-type Search struct{
+import "time"
 
-	NameSearch string `form:"search_name"`
-	DateSearch string `form:"search_date"`
+type Search struct {
+	Name string    `form:"name"`
+	Date time.Time `form:"date"`
 }

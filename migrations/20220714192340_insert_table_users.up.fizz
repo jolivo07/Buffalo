@@ -1,0 +1,15 @@
+sql(
+   "INSERT INTO users ( id, first_name, last_name, dni, phone_number, email, job_title, birthdate, created_at, updated_at)
+    VALUES ('53aebf1f-4bbb-46ef-899c-51d9c01eddf1','Joaquin', 'Olivo', 'dn112n312m3lm2', 1234564234,'jolivo@wawan.co'
+            , 'technology analyst' ,'1999-07-23','2022-07-14','2022-07-14'),
+            ('9f35cf44-14c5-4ee9-bdeb-6f2a22751ba5','Rodolfo', 'Diaz', 'd1123d1d1s', 12312345,'rdiaz@wawand.co'
+            , 'engineer 99' ,'1985-03-12','2022-07-14','2022-07-14'),
+            ('56260a65-68dd-4aab-9342-899cff7decbe','Melvin', 'Martinez', '1mi3m234in2', 567856783,'mmartinez@wawand.co'
+            , 'technology analyst' ,'2002-07-23','2022-07-14','2022-07-14'),
+            ('bcf20b76-7ec3-47fb-a1d5-76d3cdf2ec58','Pablo', 'useche', 'ij1212o3jo1', 1283984938,'juseche@wawand.co'
+            , 'engineer 2' ,'1996-11-12','2022-07-14','2022-07-14')
+            
+            
+            
+            "
+);
