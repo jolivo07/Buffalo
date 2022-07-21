@@ -16,8 +16,8 @@ func ShowUsers(c buffalo.Context) error {
 	if !ok {
 		return errors.New("no transaction found")
 	}
-	users := []models.Users{}
-	ages := models.SliceUsers{}
+	users := []models.User{}
+	ages := models.SliceUser{}
 	if err := tx.Select(" avg(date_part('year',age(birthdate))) ").All(&ages); err != nil {
 		return err
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-type Users struct {
+type User struct {
 	ID          uuid.UUID `db:"id"`
 	FirstName   string    `db:"first_name"`
 	LastName    string    `db:"last_name"`
@@ -21,11 +21,11 @@ type Users struct {
 	UpdatedAt   time.Time `db:"updated_at"`
 }
 
-type SliceUsers []Users
+type SliceUser []User
 
-func (t SliceUsers) AvgAge(avg SliceUsers) Users {
+func (t SliceUser) AvgAge(avg SliceUser) User {
 	for _, v := range avg {
 		return v
 	}
-	return Users{}
+	return User{}
 }
