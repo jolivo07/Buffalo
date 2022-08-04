@@ -1,0 +1,14 @@
+name: Testing Milo 
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  
+      - name: Install milo
+        run: |
+          curl -sf https://gobinaries.com/wawandco/milo/cmd/milo | sh
+      - name: Test-Milo
+        run: |
+           milo review ./

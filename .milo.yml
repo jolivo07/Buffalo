@@ -1,0 +1,19 @@
+output: text
+reviewers:
+- doctype-present
+- doctype-valid
+- page-inline-css-forbidden
+- page-title-present
+- page-style-tag-forbidden
+- page-tag-lowercase
+- attribute-src-required
+- tag-ol-ul-only-li-child
+- attribute-no-duplication
+- attribute-value-not-empty
+- attribute-lowercase
+- attribute-id-unique
+- attribute-alt-required
+- page-tag-parity
+- attribute-unsafe-chars
+- page-inline-script-forbidden
+- attribute-double-quotes
