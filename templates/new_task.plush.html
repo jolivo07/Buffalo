@@ -5,7 +5,13 @@
             <div class="col-12 fs-2 fw-bolder mb-5">New Task</div>
             <div class="col-12 mb-5">
                 <label for="exampleFormControlInput1" class="form-label">Title Task</label>
-                <%= f.InputTag({name:"name_task",type: "text", class: "form-control" }) %>
+                <%= f.InputTag({name:"name",type: "text", class: "form-control" }) %>
+                <%= if (error) { %>
+                    <div class="text-center p-1">
+                       <%= error %>
+    
+                    </div>
+                <% } %>
             </div>
             <div class="col-12 mb-5">
                 <label class="form-label">Description</label>

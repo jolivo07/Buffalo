@@ -7,7 +7,7 @@
                         <%= form({action: tableIncompletePath(), method: "GET"}) { %>
 
                             <div class="input-group">
-                                <%= f.InputTag({name:"search_name" , class: "form-control rounded", placeholder: "Search Name"}) %>
+                                <%= f.InputTag({name:"name" , class: "form-control rounded", placeholder: "Search Name"}) %>
                         
                               </div>
                         <% } %>
@@ -17,8 +17,8 @@
             <div class="col-8 ">
                 <%= form({action: tableIncompletePath(), method: "GET"}) { %>
                 <div class="d-flex">
-                     <%= f.InputTag({name:"search_date" , class: "form-control rounded", type:"date"}) %>
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <%= f.InputTag({name:"date" , class: "form-control rounded", type:"date"}) %>
+                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
                 <% } %>
             </div>
@@ -44,7 +44,12 @@
                 </tr>
             </thead>
             <tbody id="table-tbody-incomplete">
-                <%= for (task) in tasks { %>
+                <%= if (len(tasksIncomplete)==0) { %>
+                    <tr>
+                        <td class="text-center" colspan = "5">Task not found</td>
+                    </tr>
+                <% } %>
+                <%= for (task) in tasksIncomplete { %>
                     <tr id="task-not-incpmlete">
                         <td class="text-center">
                             <%= linkTo( checkPath({ task_id: task.ID }), {class: "fa-regular fa-circle-check text-dark fs-5 text-decoration-none" }) %>
@@ -52,17 +57,17 @@
 
                         <td class="text-center">
                             <%= linkTo(tableIncompletePath({task_id: task.ID}), {class: "text-decoration-none text-dark "}) { %>
-                                <%= task.Name_task %>
+                                <%= task.Name %>
                             <% } %>
                         </td>
 
                         <td class="text-center">
-                            <%=  task.CreatedAt.Day()t%> <%=  task.CreatedAt.Month()t%> <%=  task.CreatedAt.Year()t%> 
+                            <%=  task.CreatedAt.Format("02 January 2006")%> 
                         </td>
                         <td class="text-center">--</td>
                         <td class="text-center">
                             <%= linkTo( editPath({ task_id: task.ID }), {class: "fa-regular fa-pen-to-square text-warning fs-5 text-decoration-none" }) %>
-                                <%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none" , "data-confirm" : "Are you sure?" }) %>
+                            <%= linkTo( deletePath({ task_id: task.ID }), {class: "fa-solid fa-trash text-danger fs-5 text-decoration-none ", data-confirm:"Are you sure you want to proceed ?"}) %>
                         </td>
                     </tr>
 

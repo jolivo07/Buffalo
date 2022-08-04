@@ -13,7 +13,6 @@ func init() {
 	r = render.New(render.Options{
 		// HTML layout to be used for all HTML requests:
 		HTMLLayout: "application.plush.html",
-		
 
 		// fs.FS containing templates
 		TemplatesFS: templates.FS(),
